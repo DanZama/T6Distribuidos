@@ -15,15 +15,12 @@ public class ClienteRMI_N500{
         for(String url : urls){
             System.out.println(url);
         }
-
-        InterfaceRMI r0 = (InterfaceRMI)Naming.lookup("rmi://localhost/multiplicacion0");
+        InterfaceRMI r0 = (InterfaceRMI)Naming.lookup("rmi://localhost/multiplicacion");
         InterfaceRMI r1 = (InterfaceRMI)Naming.lookup(urls[0]);
         InterfaceRMI r2 = (InterfaceRMI)Naming.lookup(urls[1]);
         InterfaceRMI r3 = (InterfaceRMI)Naming.lookup(urls[2]);
         inicializaMatrices();
-        
         B = transponerMatriz(B);
-        
         int[][] A1 = parte_matriz(A,0);
         int[][] A2 = parte_matriz(A,N/2);
         int[][] B1 = parte_matriz(B,0);
@@ -31,7 +28,6 @@ public class ClienteRMI_N500{
 
         ClaseRMI objCliente = new ClaseRMI();
         
-        //Objetenemos la multiplicación de matrices
         int[][] C1 = objCliente.multiplica_matrices(A1,B1);
         int[][] C2 = r1.multiplica_matrices(A1,B2);
         int[][] C3 = r2.multiplica_matrices(A2,B1);
@@ -48,7 +44,6 @@ public class ClienteRMI_N500{
         
         System.out.println("Checksum="+calcularChecksum(C));
     }
-
     static void inicializaMatrices(){
         for (int i = 0; i < N; i++){
             for (int j = 0; j < N; j++){
@@ -57,9 +52,7 @@ public class ClienteRMI_N500{
                 C[i][j] = 0;
             }
         }
-        
     }
-
     static int[][] transponerMatriz(int[][] matriz){
         for (int i = 0; i < N; i++){
             for (int j = 0; j < i; j++){
@@ -109,21 +102,17 @@ public class ClienteRMI_N500{
             for(int i=0; i<3; i++){
                 urls[i] = "rmi://localhost/multiplicacion" + (i+1);
             }
-
             return urls;
         }
 
         try {
             for(int i=0; i<3; i++){
 
-                urls[i] = "rmi://" + args[i] + "/multiplicacion0";
+                urls[i] = "rmi://" + args[i] + "/multiplicacion";
             }
 
         } catch (Exception e) {
             //TODO: handle exception
-            System.err.println("Uso:");
-            System.err.println("java ClienteRMI <ip server 1> <ip server 2> <ip server 3>");
-            System.err.println("java ClienteRMI (para uso en localhost con nodo 1, 2 y 3)");
             System.exit(0);
         }
 

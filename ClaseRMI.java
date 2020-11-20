@@ -2,7 +2,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ClaseRMI extends UnicastRemoteObject implements InterfaceRMI{
-    // es necesario que el contructor ClaseRMI() invoque el constructor de la superclase
     public ClaseRMI() throws RemoteException{
         super();
     }
